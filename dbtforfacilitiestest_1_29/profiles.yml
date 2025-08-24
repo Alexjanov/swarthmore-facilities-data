@@ -1,0 +1,7 @@
+dbtforfacilitiestest_1_29:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: '/Users/alexandervasquez-jaffe/Documents/Swarthmore Facilities/dbttestproject/dbtforfacilitiestest_1_29/facilitiesfulltestdatabase_1_29.db'
+      schema: main

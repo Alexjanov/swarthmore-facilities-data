@@ -1,0 +1,246 @@
+version: 2
+
+models:
+  - name: stg_firsttest
+    description: >
+      The `stg_facilities_workorders` model captures detailed information about work orders,
+      including metadata on status, priority, location, assets, costs, and estimated hours.
+
+    config:
+      materialized: view
+
+    meta:
+      required_attributes:
+        is_admin: "true"
+
+    columns:
+      - name: workorderid
+        description: "Unique identifier for the work order."
+        tests:
+          - unique
+          - not_null
+
+      - name: workorderno
+        description: "Work order number assigned to the request."
+
+      - name: name
+        description: "Name or title of the work order."
+
+      - name: parentworkorderid
+        description: "Identifier for the parent work order, if applicable."
+
+      - name: parentworkorderno
+        description: "Work order number of the parent work order."
+
+      - name: wostatusid
+        description: "Identifier for the work order status."
+
+      - name: wostatusno
+        description: "Work order status number."
+
+      - name: wostatusname
+        description: "Current status of the work order."
+
+      - name: priorityid
+        description: "Identifier for the priority level."
+
+      - name: priorityno
+        description: "Priority number of the work order."
+
+      - name: priorityname
+        description: "Priority classification of the work order."
+
+      - name: workcategoryid
+        description: "Category ID of the work being performed."
+
+      - name: workcategoryno
+        description: "Work category number."
+
+      - name: workcategoryname
+        description: "Category name for the work order."
+
+      - name: worktypeid
+        description: "Identifier for the type of work."
+
+      - name: worktypeno
+        description: "Work type number."
+
+      - name: worktypename
+        description: "Type of work being performed."
+
+      - name: sourcetype
+        description: "Source type for the work order."
+
+      - name: problemid
+        description: "Problem identifier associated with the work order."
+
+      - name: problemno
+        description: "Problem number related to the work order."
+
+      - name: problemname
+        description: "Description of the reported problem."
+
+      - name: causeid
+        description: "Identifier for the cause of the issue."
+
+      - name: causeno
+        description: "Cause number linked to the work order."
+
+      - name: causename
+        description: "Description of the cause of the issue."
+
+      - name: costcenterid
+        description: "Identifier for the cost center associated with the work order."
+
+      - name: costcenterno
+        description: "Cost center number."
+
+      - name: costcentername
+        description: "Cost center name."
+
+      - name: projectid
+        description: "Project identifier, if applicable."
+
+      - name: projectno
+        description: "Project number."
+
+      - name: projectname
+        description: "Project name associated with the work order."
+
+      - name: origintype
+        description: "Type of origin for the work order request."
+
+      - name: originatorid
+        description: "Identifier for the person or entity who initiated the work order."
+
+      - name: originatoruserno
+        description: "Originator's user number."
+
+      - name: originatoruserfirstname
+        description: "First name of the originator."
+
+      - name: originatoruserlastname
+        description: "Last name of the originator."
+
+      - name: originatorpmno
+        description: "Project manager number of the originator."
+
+      - name: originatorpmname
+        description: "Project manager name of the originator."
+
+      - name: dateoriginated
+        description: "Date when the work order was created."
+
+      - name: dateexpected
+        description: "Expected completion date of the work order."
+
+      - name: dateassigned
+        description: "Date when the work order was assigned."
+
+      - name: datecompleted
+        description: "Date when the work order was marked as completed."
+
+      - name: dateupdated
+        description: "Date when the work order was last updated."
+
+      - name: laborhours
+        description: "Total labor hours spent on the work order."
+
+      - name: laborcost
+        description: "Total labor cost associated with the work order."
+
+      - name: partcost
+        description: "Total cost of parts used in the work order."
+
+      - name: otherhours
+        description: "Other work hours logged."
+
+      - name: othercost
+        description: "Other costs associated with the work order."
+
+      - name: partnoninventorycost
+        description: "Cost of non-inventory parts used."
+
+      - name: estimatedhours
+        description: "Estimated number of hours to complete the work order."
+
+      - name: estimatedcost
+        description: "Estimated total cost of the work order."
+
+      - name: downtime
+        description: "Indicates whether downtime was recorded for the work order."
+
+      - name: workrequested
+        description: "Description of the work requested."
+
+      - name: requesteravailabilitynotes
+        description: "Notes about the requester's availability."
+
+      - name: action
+        description: "Actions taken to resolve the issue."
+
+      - name: comment
+        description: "Additional comments on the work order."
+
+      - name: lastsignedon
+        description: "Timestamp when the work order was last signed off."
+
+      - name: lastsignedby
+        description: "Name of the person who last signed off the work order."
+
+      - name: workordercreationreading
+        description: "Reading recorded at the time of work order creation."
+
+      - name: workordertriggerdate
+        description: "Date when the work order was triggered."
+
+      - name: workordertriggermetertitle
+        description: "Title of the meter that triggered the work order."
+
+      - name: workordertriggerasset
+        description: "Asset that triggered the work order."
+
+      - name: sourceestimatedhours_1
+        description: "Estimated hours for source 1."
+
+      - name: siteid_1
+        description: "Identifier for site 1."
+
+      - name: siteno_1
+        description: "Site number for site 1."
+
+      - name: sitename_1
+        description: "Name of site 1."
+
+      - name: locationid_1
+        description: "Identifier for location 1."
+
+      - name: locationno_1
+        description: "Location number for location 1."
+
+      - name: locationsitename_1
+        description: "Site name of location 1."
+
+      - name: locationname_1
+        description: "Name of location 1."
+
+      - name: assetid_1
+        description: "Identifier for asset 1."
+
+      - name: assetno_1
+        description: "Asset number for asset 1."
+
+      - name: assetsitename_1
+        description: "Site name of asset 1."
+
+      - name: assetname_1
+        description: "Name of asset 1."
+
+      - name: metertitleid_1
+        description: "Identifier for meter title 1."
+
+      - name: metertitleno_1
+        description: "Meter title number for meter 1."
+
+      - name: metertitlename_1
+        description: "Name of meter title 1."
