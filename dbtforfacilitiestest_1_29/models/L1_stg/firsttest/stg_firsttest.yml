@@ -14,11 +14,6 @@ models:
         is_admin: "true"
 
     columns:
-      - name: workorderid
-        description: "Unique identifier for the work order."
-        tests:
-          - unique
-          - not_null
 
       - name: workorderno
         description: "Work order number assigned to the request."

@@ -1,12 +1,12 @@
 with raw_source as (
 
     select *
-    from {{ source('facilitiesfulltestdatabase_1_29', 'firsttest') }}
+    from {{ source('raw', 'facilities') }}
 
 )
 
-   , final as (select "WorkOrderId"::varchar AS workorderid
-    , "WorkOrderNo"::varchar AS workorderno
+   , final as (select
+    "WorkOrderNo"::varchar AS workorderno
     , "Name"::varchar AS name
     , "ParentWorkOrderId"::varchar AS parentworkorderid
     , "ParentWorkOrderNo"::varchar AS parentworkorderno

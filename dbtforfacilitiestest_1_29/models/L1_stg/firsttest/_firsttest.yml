@@ -1,8 +1,7 @@
-version: 2
-
 sources:
-  - name: facilitiesfulltestdatabase_1_29
-    schema: main
+  - name: raw
+    database: analytics
+    schema: raw
     tables:
-      - name: firsttest
+      - name: facilities
         description: "6 months of data pulled on 1/31/25"

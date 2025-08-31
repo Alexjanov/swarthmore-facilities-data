@@ -1,7 +1,17 @@
 dbtforfacilitiestest_1_29:
-  target: dev
+  target: dev_postgres
   outputs:
     dev:
       type: duckdb
-      path: '/Users/alexandervasquez-jaffe/Documents/Swarthmore Facilities/dbttestproject/dbtforfacilitiestest_1_29/facilitiesfulltestdatabase_1_29.db'
+      path: '/Users/Alexander.Vasquez-Jaffe/Code/swarthmore-facilities-data/dbtforfacilitiestest_1_29/facilitiesfulltestdatabase_1_29.db'
       schema: main
+
+    dev_postgres:
+      type: postgres
+      host: localhost
+      user: alex
+      password: secret123
+      port: 5432
+      dbname: analytics
+      schema: dbt_alex
+      threads: 4

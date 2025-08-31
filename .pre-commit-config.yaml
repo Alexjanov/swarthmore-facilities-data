@@ -1,0 +1,90 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+    -   id: check-yaml
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+-   repo: https://github.com/psf/black
+    rev: 22.10.0
+    hooks:
+    -   id: black
+
+-   repo: https://github.com/dbt-checkpoint/dbt-checkpoint
+    rev: v2.0.7
+
+    hooks:
+      # Commands
+      - id: dbt-compile
+        files: ^transform/models/
+
+      - id: dbt-docs-generate
+        files: ^transform/models/
+
+      # Tests
+      #      - id: check-source-table-has-description
+      #        files: ^transform/models/
+
+      - id: check-script-semicolon
+        files: ^transform/models/
+
+#      - id: check-script-has-no-table-name
+#        ## exclude dim_animal_retention from L3_core
+#        exclude: (transform\/models\/L3_core\/retention_monthly\/dim_animal_retention|fct_salary|fct_payroll_and_hours_worked|fct_jobs|fct_payroll_and_hours_worked)
+#        files: ^transform/models/
+
+      - id: check-model-has-properties-file
+        files: ^transform/models/
+
+      - id: check-model-has-tests-by-type
+        args: ["--tests", "schema=1", "--"]
+        exclude: (transform\/models\/(l1_.*))
+        files: ^transform/models/
+
+      - id: check-model-has-all-columns
+        files: ^transform/models/
+
+      - id: check-model-name-contract
+        args: ["--pattern", "(stg_).*", "--"]
+        files: ^transform/models/l1_stg/
+
+
+      - id: check-model-name-contract
+        args: ["--pattern", "(dim_|fct_).*"]
+        files: ^transform/models/l2_transform/
+
+
+      - id: check-column-name-contract
+        name: Check Column Name Contract Boolean
+        args: ["--pattern", "is_.*", "--dtype", "boolean", "--"]
+        files: ^transform/models/
+
+      - id: check-column-name-contract
+        name: Check Column Name Contract Boolean
+        args: ["--pattern", "(.*_at$|.*_at_month$|.*_at_week$|.*_at_year$|.*_at_day$|.*_at_local$|^(?!is_).*_from$|^(?!is_).*_to$)", "--dtype", "timestamp", "timestamp_tz", "timestamp_ntz", "date", "--"]
+        files: ^transform/models/
+
+-   repo: https://github.com/sqlfluff/sqlfluff
+    # this is the version of sqlfluff, needs to be updated when using a new sqlfluff version (pip show sqlfluff)
+    rev: 3.4.1
+    hooks:
+      - id: sqlfluff-fix
+        language: python
+        # Need these two dependencies.
+        #   sqlfluff-templater-dbt should match the version of sqlfluff above in rev (pip show sqlfluff-templater-dbt)
+        #   dbt-snowflake needs to match the version in transform tab of Datacoves (pip show dbt-snowflake)
+        additional_dependencies:
+          [
+            "sqlfluff-templater-dbt==3.4.1",
+            "dbt-core==1.9.4",
+            "dbt-snowflake==1.9.4",
+          ]
+        args: [--config, .sqlfluff]
+        files: ^transform/models/
+
+
+-   repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.37.1
+    hooks:
+      - id: yamllint
+        args: [-c=.yamllint]
