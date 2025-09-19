@@ -3,13 +3,61 @@ services:
     image: postgres:16
     container_name: local-postgres-new
     environment:
-      POSTGRES_USER: alex
-      POSTGRES_PASSWORD: secret123
-      POSTGRES_DB: analytics
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: ${WAREHOUSE_DB}
     ports:
-      - "5432:5432"
+      - "${PGPORT}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+
+  lightdash:
+    image: lightdash/lightdash:latest
+    platform: linux/amd64
+    container_name: lightdash
+    depends_on:
+      - postgres
+    ports:
+      - "${LD_PORT:-8080}:8080"
+    environment:
+      # Lightdash metadata database (NOT your analytics data)
+      PGHOST: postgres
+      PGPORT: 5432
+      PGUSER: ${PGUSER}
+      PGPASSWORD: ${PGPASSWORD}
+      PGDATABASE: ${LIGHTDASH_META_DB}
+      LIGHTDASH_SECRET: ${LIGHTDASH_SECRET}
+      NODE_ENV: production
+      SECURE_COOKIES: "false"
+      TRUST_PROXY: "false"
+      LIGHTDASH_LOG_LEVEL: info
+      SCHEDULER_ENABLED: "true"
+      # If you later add the optional headless browser, uncomment:
+      # HEADLESS_BROWSER_HOST: headless-browser
+      # HEADLESS_BROWSER_PORT: 3000
+    volumes:
+      # Mount your dbt project (folder that contains dbt_project.yml)
+      - "${DBT_PROJECT_DIR}:/usr/app/dbt:ro"
+
+  # Optional: headless browser for scheduled deliveries/exports
+  # headless-browser:
+  #   image: ghcr.io/browserless/chromium:v2.24.3
+  #   container_name: lightdash-headless
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3001:3000"
+
+  # Optional: MinIO (S3-compatible) for result cache/exports
+  # minio:
+  #   image: bitnami/minio:latest
+  #   container_name: lightdash-minio
+  #   environment:
+  #     MINIO_ROOT_USER: minioadmin
+  #     MINIO_ROOT_PASSWORD: minioadmin
+  #     MINIO_DEFAULT_BUCKETS: default
+  #   ports:
+  #     - "9000:9000"
+  #     - "9001:9001"
 
 volumes:
   pgdata:

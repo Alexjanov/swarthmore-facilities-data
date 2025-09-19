@@ -1,9 +1,9 @@
-dbtforfacilitiestest_1_29:
+transform:
   target: dev_postgres
   outputs:
     dev:
       type: duckdb
-      path: '/Users/Alexander.Vasquez-Jaffe/Code/swarthmore-facilities-data/dbtforfacilitiestest_1_29/facilitiesfulltestdatabase_1_29.db'
+      path: '/Users/Alexander.Vasquez-Jaffe/Code/swarthmore-facilities-data/transform/facilitiesfulltestdatabase_1_29.db'
       schema: main
 
     dev_postgres:
