@@ -9,9 +9,9 @@ models:
     config:
       materialized: view
 
-    meta:
-      required_attributes:
-        is_admin: "true"
+#    meta:
+#      required_attributes:
+#        is_admin: "true"
 
     columns:
 
