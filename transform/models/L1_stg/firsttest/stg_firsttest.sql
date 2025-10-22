@@ -6,81 +6,81 @@ with raw_source as (
 )
 
    , final as (select
-    "WorkOrderNo"::varchar AS workorderno
+    "WorkOrderNo"::varchar AS work_order_no
     , "Name"::varchar AS name
-    , "ParentWorkOrderId"::varchar AS parentworkorderid
-    , "ParentWorkOrderNo"::varchar AS parentworkorderno
-    , "WOStatusId"::varchar AS wostatusid
-    , "WOStatusNo"::varchar AS wostatusno
-    , "WOStatusName"::varchar AS wostatusname
-    , "PriorityId"::varchar AS priorityid
-    , "PriorityNo"::varchar AS priorityno
-    , "PriorityName"::varchar AS priorityname
-    , "WorkCategoryId"::varchar AS workcategoryid
-    , "WorkCategoryNo"::varchar AS workcategoryno
-    , "WorkCategoryName"::varchar AS workcategoryname
-    , "WorkTypeId"::varchar AS worktypeid
-    , "WorkTypeNo"::varchar AS worktypeno
-    , "WorkTypeName"::varchar AS worktypename
-    , "SourceType"::varchar AS sourcetype
-    , "ProblemId"::varchar AS problemid
-    , "ProblemNo"::varchar AS problemno
-    , "ProblemName"::varchar AS problemname
-    , "CauseId"::varchar AS causeid
-    , "CauseNo"::varchar AS causeno
-    , "CauseName"::varchar AS causename
-    , "CostCenterId"::varchar AS costcenterid
-    , "CostCenterNo"::varchar AS costcenterno
-    , "CostCenterName"::varchar AS costcentername
-    , "ProjectId"::varchar AS projectid
-    , "ProjectNo"::varchar AS projectno
-    , "ProjectName"::varchar AS projectname
-    , "OriginType"::varchar AS origintype
-    , "OriginatorId"::varchar AS originatorid
-    , "OriginatorUserNo"::varchar AS originatoruserno
-    , "OriginatorUserFirstName"::varchar AS originatoruserfirstname
-    , "OriginatorUserLastName"::varchar AS originatoruserlastname
-    , "OriginatorPMNo"::varchar AS originatorpmno
-    , "OriginatorPMName"::varchar AS originatorpmname
-    , "DateOriginated"::varchar AS dateoriginated
-    , "DateExpected"::varchar AS dateexpected
-    , "DateAssigned"::varchar AS dateassigned
-    , "DateCompleted"::varchar AS datecompleted
-    , "DateUpdated"::varchar AS dateupdated
-    , "LaborHours"::varchar AS laborhours
-    , "LaborCost"::varchar AS laborcost
-    , "PartCost"::varchar AS partcost
-    , "OtherHours"::varchar AS otherhours
-    , "OtherCost"::varchar AS othercost
-    , "PartNonInventoryCost"::varchar AS partnoninventorycost
-    , "EstimatedHours"::varchar AS estimatedhours
-    , "EstimatedCost"::varchar AS estimatedcost
-    , "Downtime"::varchar AS downtime
-    , "WorkRequested"::varchar AS workrequested
-    , "RequesterAvailabilityNotes"::varchar AS requesteravailabilitynotes
-    , "Action"::varchar AS action
+    , "ParentWorkOrderId"::varchar AS parent_work_order_id
+    , "ParentWorkOrderNo"::varchar AS parent_work_order_no
+    , "WOStatusId"::varchar AS wo_status_id
+    , "WOStatusNo"::varchar AS wo_status_no
+    , "WOStatusName"::varchar AS wo_status_name
+    , "PriorityId"::varchar AS priority_id
+    , "PriorityNo"::varchar AS priority_no
+    , "PriorityName"::varchar AS priority_name
+    , "WorkCategoryId"::varchar AS work_category_id
+    , "WorkCategoryNo"::varchar AS work_category_no
+    , "WorkCategoryName"::varchar AS work_category_name
+    , "WorkTypeId"::varchar AS work_type_id
+    , "WorkTypeNo"::varchar AS work_type_no
+    , "WorkTypeName"::varchar AS work_type_name
+    , "SourceType"::varchar AS source_type
+    , "ProblemId"::varchar AS problem_id
+    , "ProblemNo"::varchar AS problem_no
+    , "ProblemName"::varchar AS problem_name
+    , "CauseId"::varchar AS cause_id
+    , "CauseNo"::varchar AS cause_no
+    , "CauseName"::varchar AS cause_name
+    , "CostCenterId"::varchar AS cost_center_id
+    , "CostCenterNo"::varchar AS cost_center_no
+    , "CostCenterName"::varchar AS cost_center_name
+    , "ProjectId"::varchar AS project_id
+    , "ProjectNo"::varchar AS project_no
+    , "ProjectName"::varchar AS project_name
+    , "OriginType"::varchar AS origin_type
+    , "OriginatorId"::varchar AS originator_id
+    , "OriginatorUserNo"::varchar AS originator_user_no
+    , "OriginatorUserFirstName"::varchar AS originator_user_first_name
+    , "OriginatorUserLastName"::varchar AS originator_user_last_name
+    , "OriginatorPMNo"::varchar AS originator_pm_no
+    , "OriginatorPMName"::varchar AS originator_pm_name
+    , "DateOriginated"::varchar AS date_originated
+    , "DateExpected"::varchar AS date_expected
+    , "DateAssigned"::varchar AS date_assigned
+    , "DateCompleted"::varchar AS date_completed
+    , "DateUpdated"::varchar AS date_updated
+    , "LaborHours"::varchar AS labor_hours
+    , "LaborCost"::varchar AS labor_cost
+    , "PartCost"::varchar AS part_cost
+    , "OtherHours"::varchar AS other_hours
+    , "OtherCost"::varchar AS other_cost
+    , "PartNonInventoryCost"::varchar AS part_non_inventory_cost
+    , "EstimatedHours"::varchar AS estimated_hours
+    , "EstimatedCost"::varchar AS estimated_cost
+    , "Downtime"::varchar AS down_time
+    , "WorkRequested"::varchar AS work_requested
+    , "RequesterAvailabilityNotes"::varchar AS requester_availability_notes
+    , "Action"::varchar AS action_taken
    , "Comment":: varchar AS comment
-   , "LastSignedOn":: varchar AS lastsignedon
-   , "LastSignedBy":: varchar AS lastsignedby
-   , "WorkOrderCreationReading":: varchar AS workordercreationreading
-   , "WorkOrderTriggerDate":: varchar AS workordertriggerdate
-   , "WorkOrderTriggerMeterTitle":: varchar AS workordertriggermetertitle
-   , "WorkOrderTriggerAsset":: varchar AS workordertriggerasset
-   , "SourceEstimatedHours_1":: varchar AS sourceestimatedhours_1
-   , "SiteId_1":: varchar AS siteid_1
-   , "SiteNo_1":: varchar AS siteno_1
-   , "SiteName_1":: varchar AS sitename_1
-   , "LocationId_1":: varchar AS locationid_1
-   , "LocationNo_1":: varchar AS locationno_1
-   , "LocationSiteName_1":: varchar AS locationsitename_1
-   , "LocationName_1":: varchar AS locationname_1
-   , "AssetId_1":: varchar AS assetid_1
-   , "AssetNo_1":: varchar AS assetno_1
-   , "AssetSiteName_1":: varchar AS assetsitename_1
-   , "AssetName_1":: varchar AS assetname_1
-   , "MeterTitleId_1":: varchar AS metertitleid_1
-   , "MeterTitleNo_1":: varchar AS metertitleno_1
-   , "MeterTitleName_1":: varchar AS metertitlename_1
+   , "LastSignedOn":: varchar AS last_signed_on
+   , "LastSignedBy":: varchar AS last_signed_by
+   , "WorkOrderCreationReading":: varchar AS work_order_creation_reading
+   , "WorkOrderTriggerDate":: varchar AS work_order_trigger_date
+   , "WorkOrderTriggerMeterTitle":: varchar AS work_order_trigger_meter_title
+   , "WorkOrderTriggerAsset":: varchar AS work_order_trigger_asset
+   , "SourceEstimatedHours_1":: varchar AS sourc_eestimated_hours_1
+   , "SiteId_1":: varchar AS site_id_1
+   , "SiteNo_1":: varchar AS site_no_1
+   , "SiteName_1":: varchar AS site_name_1
+   , "LocationId_1":: varchar AS location_id_1
+   , "LocationNo_1":: varchar AS location_no_1
+   , "LocationSiteName_1":: varchar AS location_site_name_1
+   , "LocationName_1":: varchar AS location_name_1
+   , "AssetId_1":: varchar AS asset_id_1
+   , "AssetNo_1":: varchar AS asset_no_1
+   , "AssetSiteName_1":: varchar AS asset_site_name_1
+   , "AssetName_1":: varchar AS asset_name_1
+   , "MeterTitleId_1":: varchar AS meter_title_id_1
+   , "MeterTitleNo_1":: varchar AS meter_title_no_1
+   , "MeterTitleName_1":: varchar AS meter_title_name_1
 
 from raw_source
 
