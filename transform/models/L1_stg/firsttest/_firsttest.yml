@@ -1,7 +1,0 @@
-sources:
-  - name: first_test1
-    database: analytics
-    schema: first_test1
-    tables:
-      - name: facilities
-        description: "6 months of data pulled on 1/31/25"

@@ -1,0 +1,95 @@
+version: 2
+
+models:
+  - name: fct_all_work_orders
+    description: >
+      Final cleaned work orders model built from the intermediate model `first`.
+      Contains key attributes of work orders such as status, cost, timing, and location details.
+
+    config:
+      materialized: view
+
+    columns:
+      - name: work_order_no
+        description: Unique identifier for the work order.
+
+      - name: title
+        description: Title or short description of the work order.
+
+      - name: wo_status
+        description: Current status of the work order.
+
+      - name: priority
+        description: Priority assigned to the work order.
+
+      - name: work_type
+        description: Type of work being performed.
+
+      - name: source_type
+        description: Source category of the work order.
+
+      - name: cost_center
+        description: Cost center responsible for the work order.
+
+      - name: origin_type
+        description: Type of origin for the work order.
+
+      - name: originator
+        description: Person or entity that originated the work order.
+
+      - name: originator_pm
+        description: Project manager or responsible person for the work order.
+
+      - name: originated_at
+        description: Date and time when the work order was created.
+
+      - name: expected_at
+        description: Date and time when the work order was expected to be completed.
+
+      - name: assigned_at
+        description: Date and time when the work order was assigned.
+
+      - name: completed_at
+        description: Date and time when the work order was completed.
+
+      - name: labor_hours
+        description: Number of labor hours logged for the work order.
+
+      - name: labor_cost
+        description: Labor cost associated with the work order.
+
+      - name: part_cost
+        description: Cost of parts used in the work order.
+
+      - name: other_hours
+        description: Other (non-labor) hours recorded for the work order.
+
+      - name: other_cost
+        description: Other non-labor costs incurred.
+
+      - name: part_non_inventory_cost
+        description: Cost of parts not tracked in inventory.
+
+      - name: estimated_hours
+        description: Estimated number of hours required to complete the work.
+
+      - name: estimated_cost
+        description: Estimated total cost of the work order.
+
+      - name: work_requested
+        description: Description of the work requested.
+
+      - name: action_taken
+        description: Actions taken to complete the work.
+
+      - name: comment
+        description: Additional notes or comments related to the work order.
+
+      - name: source_estimated_hours
+        description: Estimated hours as provided by the source system.
+
+      - name: location_name
+        description: Name of the location where the work is performed.
+
+      - name: asset_name
+        description: Name of the asset associated with the work order.

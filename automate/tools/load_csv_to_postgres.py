@@ -1,10 +1,10 @@
-'''
+"""
 Steps for File Export
     1. In Asset Essentials, in the column chooser button, select all
     2. More > Export > make sure you select visible columns, not all columns
 
 
-'''
+"""
 
 #!/usr/bin/env python3
 import argparse
@@ -23,7 +23,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 PG_CONN = {
-    "host": os.getenv("PGHOST", "localhost"),
+    "host": os.getenv("PGHOST", "127.0.0.1"),
     "port": int(os.getenv("PGPORT", "5432")),
     "user": os.getenv("PGUSER", "alex"),
     "password": os.getenv("PGPASSWORD", "secret123"),

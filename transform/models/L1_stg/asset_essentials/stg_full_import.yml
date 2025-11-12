@@ -1,0 +1,238 @@
+version: 2
+
+models:
+  - name: stg_full_import
+    description: >
+      Cast-and-rename view of raw facilities work orders.
+
+    config:
+      materialized: view
+
+    columns:
+      - name: work_order_no
+        description: Work order number.
+
+      - name: name
+        description: Work order title/name.
+
+      - name: parent_work_order_id
+        description: Parent work order internal id.
+
+      - name: parent_work_order_no
+        description: Parent work order number.
+
+      - name: wo_status_id
+        description: Work order status id.
+
+      - name: wo_status_no
+        description: Work order status code/number.
+
+      - name: wo_status_name
+        description: Work order status name/label.
+
+      - name: priority_id
+        description: Priority id.
+
+      - name: priority_no
+        description: Priority number/code.
+
+      - name: priority_name
+        description: Priority name/label.
+
+      - name: work_category_id
+        description: Work category id.
+
+      - name: work_category_no
+        description: Work category number/code.
+
+      - name: work_category_name
+        description: Work category name/label.
+
+      - name: work_type_id
+        description: Work type id.
+
+      - name: work_type_no
+        description: Work type number/code.
+
+      - name: work_type_name
+        description: Work type name/label.
+
+      - name: source_type
+        description: Source type of the work order.
+
+      - name: problem_id
+        description: Problem id.
+
+      - name: problem_no
+        description: Problem code/number.
+
+      - name: problem_name
+        description: Problem name/label.
+
+      - name: cause_id
+        description: Cause id.
+
+      - name: cause_no
+        description: Cause code/number.
+
+      - name: cause_name
+        description: Cause name/label.
+
+      - name: cost_center_id
+        description: Cost center id.
+
+      - name: cost_center_no
+        description: Cost center code/number.
+
+      - name: cost_center_name
+        description: Cost center name.
+
+      - name: project_id
+        description: Project id.
+
+      - name: project_no
+        description: Project number/code.
+
+      - name: project_name
+        description: Project name.
+
+      - name: origin_type
+        description: Origin type of the work order.
+
+      - name: originator_id
+        description: Originator id.
+
+      - name: originator_user_no
+        description: Originator user number.
+
+      - name: originator_user_first_name
+        description: Originator first name.
+
+      - name: originator_user_last_name
+        description: Originator last name.
+
+      - name: originator_pm_no
+        description: Originator PM number.
+
+      - name: originator_pm_name
+        description: Originator PM name.
+
+      - name: date_originated
+        description: Date originated (string in model).
+
+      - name: date_expected
+        description: Date expected (string in model).
+
+      - name: date_assigned
+        description: Date assigned (string in model).
+
+      - name: date_completed
+        description: Date completed (string in model).
+
+      - name: date_updated
+        description: Date updated (string in model).
+
+      - name: labor_hours
+        description: Labor hours (string in model).
+
+      - name: labor_cost
+        description: Labor cost (string in model).
+
+      - name: part_cost
+        description: Part cost (string in model).
+
+      - name: other_hours
+        description: Other hours (string in model).
+
+      - name: other_cost
+        description: Other cost (string in model).
+
+      - name: part_non_inventory_cost
+        description: Part non-inventory cost (string in model).
+
+      - name: estimated_hours
+        description: Estimated hours (string in model).
+
+      - name: estimated_cost
+        description: Estimated cost (string in model).
+
+      - name: down_time
+        description: Downtime (string in model).
+
+      - name: work_requested
+        description: Work requested free text.
+
+      - name: requester_availability_notes
+        description: Requester availability notes.
+
+      - name: action_taken
+        description: Action taken.
+
+      - name: comment
+        description: Comment field.
+
+      - name: last_signed_on
+        description: Last signed-on timestamp (string in model).
+
+      - name: last_signed_by
+        description: Last signed-by user.
+
+      - name: work_order_creation_reading
+        description: Creation reading value (string in model).
+
+      - name: work_order_trigger_date
+        description: Trigger date (string in model).
+
+      - name: work_order_trigger_meter_title
+        description: Trigger meter title.
+
+      - name: work_order_trigger_asset
+        description: Trigger asset.
+
+      - name: source_estimated_hours_1
+        description: Source estimated hours (aux 1).
+
+      - name: site_id_1
+        description: Site id (aux 1).
+
+      - name: site_no_1
+        description: Site number (aux 1).
+
+      - name: site_name_1
+        description: Site name (aux 1).
+
+      - name: location_id_1
+        description: Location id (aux 1).
+
+      - name: location_no_1
+        description: Location number (aux 1).
+
+      - name: location_site_name_1
+        description: Location site name (aux 1).
+
+      - name: location_name_1
+        description: Location name (aux 1).
+
+      - name: asset_id_1
+        description: Asset id (aux 1).
+
+      - name: asset_no_1
+        description: Asset number (aux 1).
+
+      - name: asset_site_name_1
+        description: Asset site name (aux 1).
+
+      - name: asset_name_1
+        description: Asset name (aux 1).
+
+      - name: meter_title_id_1
+        description: Meter title id (aux 1).
+
+      - name: meter_title_no_1
+        description: Meter title number (aux 1).
+
+      - name: meter_title_name_1
+        description: Meter title name (aux 1).
+
+      - name: test_col
+        description: Test integer column.
