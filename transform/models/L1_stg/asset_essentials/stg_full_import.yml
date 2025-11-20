@@ -8,6 +8,11 @@ models:
     config:
       materialized: view
 
+    meta:
+      required_attributes:
+        is_admin: "true"
+      group_label: "Staging Models"
+
     columns:
       - name: work_order_no
         description: Work order number.

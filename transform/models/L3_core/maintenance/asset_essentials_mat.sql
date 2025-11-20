@@ -28,8 +28,3 @@
         , location_name
         , asset_name
 from {{ ref('fct_all_work_orders') }}
-
-
-{#I need to make it a materialized table here. I also need to add metrics, so that means look at pwa example
-and in the yaml there is like a - metrics: thing I need to add for count and sum and other
-stuff liek that that I want#}

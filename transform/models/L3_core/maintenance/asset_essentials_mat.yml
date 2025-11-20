@@ -1,34 +1,37 @@
 version: 2
 
 models:
-  - name: fct_all_work_orders
+  - name: asset_essentials_mat
     description: >
-      Final cleaned work orders model built from the intermediate model `first`.
-      Contains key attributes of work orders such as status, cost, timing, and location details.
+      Materialized table of all work orders from Asset Essentials.
+      This model provides a performant layer for analytics and reporting on maintenance work orders.
+      Includes key attributes such as status, costs, timing, locations, and assets.
 
     config:
-      materialized: view
-
-    meta:
-      required_attributes:
-        is_admin: "true"
-      group_label: "Staging Models"
+      materialized: table
 
     columns:
       - name: work_order_no
         description: Unique identifier for the work order.
+        data_tests:
+          - not_null
+          - unique
+        meta:
+          metrics:
+            total_work_orders:
+              type: count_distinct
 
       - name: title
         description: Title or short description of the work order.
 
       - name: wo_status
-        description: Current status of the work order.
+        description: Current status of the work order (e.g., Open, Closed, In Progress).
 
       - name: priority
-        description: Priority assigned to the work order.
+        description: Priority assigned to the work order (e.g., High, Medium, Low).
 
       - name: work_type
-        description: Type of work being performed.
+        description: Type of work being performed (e.g., Corrective, Preventive, Emergency).
 
       - name: source_type
         description: Source category of the work order.
@@ -59,27 +62,59 @@ models:
 
       - name: labor_hours
         description: Number of labor hours logged for the work order.
+        meta:
+          metrics:
+            total_labor_hours:
+              type: sum
+            avg_labor_hours:
+              type: average
 
       - name: labor_cost
         description: Labor cost associated with the work order.
+        meta:
+          metrics:
+            total_labor_cost:
+              type: sum
+            avg_labor_cost:
+              type: average
 
       - name: part_cost
         description: Cost of parts used in the work order.
+        meta:
+          metrics:
+            total_part_cost:
+              type: sum
 
       - name: other_hours
         description: Other (non-labor) hours recorded for the work order.
 
       - name: other_cost
         description: Other non-labor costs incurred.
+        meta:
+          metrics:
+            total_other_cost:
+              type: sum
 
       - name: part_non_inventory_cost
         description: Cost of parts not tracked in inventory.
+        meta:
+          metrics:
+            total_part_non_inventory_cost:
+              type: sum
 
       - name: estimated_hours
         description: Estimated number of hours required to complete the work.
+        meta:
+          metrics:
+            total_estimated_hours:
+              type: sum
 
       - name: estimated_cost
         description: Estimated total cost of the work order.
+        meta:
+          metrics:
+            total_estimated_cost:
+              type: sum
 
       - name: work_requested
         description: Description of the work requested.
@@ -98,3 +133,4 @@ models:
 
       - name: asset_name
         description: Name of the asset associated with the work order.
+
