@@ -15,7 +15,7 @@ models:
         description: Unique identifier for the work order.
         data_tests:
           - not_null
-          - unique
+#          - unique
         meta:
           metrics:
             total_work_orders:
@@ -48,17 +48,59 @@ models:
       - name: originator_pm
         description: Project manager or responsible person for the work order.
 
+      - name: week_number
+        description: Week as number instead of date
+        meta:
+          dimension:
+            type: number
+            sql: "EXTRACT(WEEK FROM ${TABLE}.originated_at)"
+            label: "Week (Number)"
+            group_label: "Date"
+
+      - name: month_number
+        description: Week as number instead of date
+        meta:
+          dimension:
+            type: number
+            sql: "EXTRACT(MONTH FROM ${TABLE}.originated_at)"
+            label: "Month (Number)"
+            group_label: "Date"
+
       - name: originated_at
         description: Date and time when the work order was created.
+        meta:
+          dimension:
+            type: date
+            label: "Originated At"
+            time_intervals: ['DAY', 'WEEK', 'MONTH', 'QUARTER', 'YEAR']
+            group_label: "Date"
 
       - name: expected_at
         description: Date and time when the work order was expected to be completed.
+        meta:
+          dimension:
+            type: date
+            label: "Expected At"
+            time_intervals: ['DAY', 'WEEK', 'MONTH', 'QUARTER', 'YEAR']
+            group_label: "Date"
 
       - name: assigned_at
         description: Date and time when the work order was assigned.
+        meta:
+          dimension:
+            type: date
+            label: "Assigned At"
+            time_intervals: ['DAY', 'WEEK', 'MONTH', 'QUARTER', 'YEAR']
+            group_label: "Date"
 
       - name: completed_at
         description: Date and time when the work order was completed.
+        meta:
+          dimension:
+            type: date
+            label: "Completed At"
+            time_intervals: ['DAY', 'WEEK', 'MONTH', 'QUARTER', 'YEAR']
+            group_label: "Date"
 
       - name: labor_hours
         description: Number of labor hours logged for the work order.

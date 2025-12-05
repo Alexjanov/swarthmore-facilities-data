@@ -1,7 +1,7 @@
 """
 Steps for File Export
     1. In Asset Essentials, in the column chooser button, select all
-    2. More > Export > make sure you select visible columns, not all columns
+    2. More > Export > all columns > CSV
 
 
 """
