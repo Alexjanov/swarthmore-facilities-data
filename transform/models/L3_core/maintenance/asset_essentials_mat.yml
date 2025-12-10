@@ -33,6 +33,9 @@ models:
       - name: work_type
         description: Type of work being performed (e.g., Corrective, Preventive, Emergency).
 
+      - name: work_category
+        description: Work category of the work order (electrical, plumbing, etc.).
+
       - name: source_type
         description: Source category of the work order.
 

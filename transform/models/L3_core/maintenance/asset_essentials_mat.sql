@@ -4,6 +4,7 @@
         , wo_status
         , priority
         , work_type
+        , work_category
         , source_type
         , cost_center
         , origin_type

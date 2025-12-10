@@ -13,7 +13,7 @@ with first as (
         , priority_name as priority
 {#        , work_category_id#}
 {#        , work_category_no#}
-{#        , work_category_name#}
+        , work_category_name as work_category
 {#        , work_type_id#}
 {#        , work_type_no#}
         , work_type_name as work_type
@@ -88,6 +88,7 @@ with first as (
         , wo_status
         , priority
         , work_type
+        , work_category
         , source_type
         , cost_center
         , origin_type
