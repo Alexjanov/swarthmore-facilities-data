@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: stg_extermination
+    description: >
+      Cast-and-rename view of raw extermination and pest control records.
+
+    config:
+      materialized: view
+
+    meta:
+      required_attributes:
+        is_admin: "true"
+      group_label: "Staging Models"
+
+    columns:
+      - name: date_at
+        description: Date of the extermination report.
+
+      - name: category
+        description: Category of the service or issue.
+
+      - name: address
+        description: Building or property address.
+
+      - name: location
+        description: Specific location within the building.
+
+      - name: room
+        description: Room number or identifier.
+
+      - name: pest
+        description: Type of pest reported.
+
+      - name: report
+        description: Report description or details.
+
+      - name: reporter
+        description: Person who reported the issue.
+
+      - name: action_a
+        description: First action taken to address the issue.
+
+      - name: action_b
+        description: Second action taken to address the issue.
+
+      - name: addtl_info
+        description: Additional information or notes about the report.

@@ -175,4 +175,3 @@ models:
 
       - name: asset_name
         description: Name of the asset associated with the work order.
-

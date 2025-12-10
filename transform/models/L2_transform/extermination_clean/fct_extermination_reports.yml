@@ -1,0 +1,49 @@
+version: 2
+
+models:
+  - name: fct_extermination_reports
+    description: >
+      Final cleaned extermination and pest control reports model built from the staging layer.
+      Contains key attributes of pest reports such as location, pest type, actions taken, and timestamps.
+
+    config:
+      materialized: view
+
+    meta:
+      required_attributes:
+        is_admin: "true"
+      group_label: "Transform Models"
+
+    columns:
+      - name: date_at
+        description: Date and time when the pest issue was reported.
+
+      - name: category
+        description: Category of the service or issue (e.g., routine inspection, emergency response).
+
+      - name: address
+        description: Building or property address where the pest issue occurred.
+
+      - name: location
+        description: Specific location within the building (e.g., basement, first floor).
+
+      - name: room
+        description: Room number or identifier where the pest was found.
+
+      - name: pest
+        description: Type of pest reported (e.g., rodents, insects, birds).
+
+      - name: report
+        description: Detailed description of the pest issue or sighting.
+
+      - name: reporter
+        description: Name or identifier of the person who reported the pest issue.
+
+      - name: action_a
+        description: Primary action taken to address the pest issue (e.g., trap placement, treatment application).
+
+      - name: action_b
+        description: Secondary or follow-up action taken to address the pest issue.
+
+      - name: addtl_info
+        description: Additional information, notes, or observations about the pest report and response.

@@ -1,9 +1,25 @@
 """
 Steps for File Export
-    1. In Asset Essentials, in the column chooser button, select all
-    2. More > Export > all columns > CSV
+    1. Export extermination data with all columns
+    2. Ensure CSV includes: Date, Category, Address, Location, Room, Pest, Report, Reporter, Action A, Action B, Addtl Info
 
+Expected Columns in CSV:
+    - Date: Date of the extermination report
+    - Category: Category of the service/issue
+    - Address: Building/property address
+    - Location: Specific location within building
+    - Room: Room number or identifier
+    - Pest: Type of pest reported
+    - Report: Report description
+    - Reporter: Person who reported the issue
+    - Action A: First action taken
+    - Action B: Second action taken
+    - Addtl Info: Additional information/notes
 
+Configuration via .env:
+    Set COLS_KEEP to the columns you want (e.g., "Date,Category,Address,Location,Room,Pest,Report,Reporter,Action A,Action B,Addtl Info")
+    Set COL_TYPES to matching PostgreSQL types (e.g., "DATE,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT")
+    Or use simpler types if needed (e.g., all TEXT if Date is stored as text)
 """
 
 #!/usr/bin/env python3
@@ -22,29 +38,48 @@ from dotenv import load_dotenv
 # --- Load settings from .env ---
 load_dotenv()
 
+# PostgreSQL connection settings
 PG_CONN = {
-    "host": os.getenv("PGHOST", "127.0.0.1"),
+    "host": os.getenv("PGHOST"),
     "port": int(os.getenv("PGPORT", "5432")),
-    "user": os.getenv("PGUSER", "alex"),
-    "password": os.getenv("PGPASSWORD", "secret123"),
-    "dbname": os.getenv("PGDATABASE", "analytics"),
+    "user": os.getenv("PGUSER"),
+    "password": os.getenv("PGPASSWORD"),
+    "dbname": os.getenv("PGDATABASE"),
 }
 
-TARGET_SCHEMA = os.getenv("PGTARGET_SCHEMA", "raw")
-TARGET_TABLE = os.getenv("PGTARGET_TABLE", "facilities")
-UPSERT_KEY = os.getenv("PGUPSERT_KEY", "")
+# Validate required connection parameters
+required_params = ["host", "user", "password", "dbname"]
+missing = [k for k in required_params if not PG_CONN.get(k)]
+if missing:
+    print(
+        f'ERROR: Missing required .env variables: {", ".join(f"PG{k.upper()}" for k in missing)}',
+        file=sys.stderr,
+    )
+    sys.exit(1)
+
+TARGET_SCHEMA = os.getenv("PGTARGET_SCHEMA_EXTERMINATION", "raw")
+TARGET_TABLE = os.getenv("PGTARGET_TABLE_EXTERMINATION", "extermination")
+UPSERT_KEY = os.getenv("PGUPSERT_KEY_EXTERMINATION", "")
 
 # Columns + types from .env
-COLS_KEEP: List[str] = [
-    c.strip() for c in os.getenv("COLS_KEEP", "").split(",") if c.strip()
+COLS_KEEP_RAW: List[str] = [
+    c.strip() for c in os.getenv("COLS_KEEP_EXTERMINATION", "").split(",") if c.strip()
 ]
 COL_TYPES: List[str] = [
-    t.strip() for t in os.getenv("COL_TYPES", "").split(",") if t.strip()
+    t.strip() for t in os.getenv("COL_TYPES_EXTERMINATION", "").split(",") if t.strip()
 ]
-if len(COLS_KEEP) != len(COL_TYPES):
-    print("ERROR: COLS_KEEP and COL_TYPES must have the same length.", file=sys.stderr)
+if len(COLS_KEEP_RAW) != len(COL_TYPES):
+    print(
+        "ERROR: COLS_KEEP_EXTERMINATION and COL_TYPES_EXTERMINATION must have the same length.",
+        file=sys.stderr,
+    )
     sys.exit(1)
+
+# Create lowercase versions for PostgreSQL
+COLS_KEEP = [c.lower() for c in COLS_KEEP_RAW]
 COLUMN_TYPES: Dict[str, str] = dict(zip(COLS_KEEP, COL_TYPES))
+# Mapping from original CSV column names to lowercase versions
+CSV_TO_PG_COLS: Dict[str, str] = dict(zip(COLS_KEEP_RAW, COLS_KEEP))
 
 
 def ensure_table(conn):
@@ -74,10 +109,11 @@ def ensure_table(conn):
 
 
 def filter_csv(in_path: str) -> str:
-    """Write a temp CSV with only kept columns, in order."""
+    """Write a temp CSV with only kept columns, in order, with lowercase headers."""
     with open(in_path, "r", encoding="utf-8", newline="") as fin:
         dr = csv.DictReader(fin)
-        missing = [c for c in COLS_KEEP if c not in dr.fieldnames]
+        # Check for missing columns using original CSV column names
+        missing = [c for c in COLS_KEEP_RAW if c not in dr.fieldnames]
         if missing:
             print(f"ERROR: CSV is missing columns: {missing}", file=sys.stderr)
             sys.exit(2)
@@ -85,10 +121,14 @@ def filter_csv(in_path: str) -> str:
             "w", delete=False, encoding="utf-8", newline=""
         )
         with tmp as fout:
+            # Write with lowercase column names for PostgreSQL
             dw = csv.DictWriter(fout, fieldnames=COLS_KEEP)
             dw.writeheader()
             for row in dr:
-                dw.writerow({c: row.get(c, "") for c in COLS_KEEP})
+                # Map from original CSV columns to lowercase
+                dw.writerow(
+                    {CSV_TO_PG_COLS[orig]: row.get(orig, "") for orig in COLS_KEEP_RAW}
+                )
         return tmp.name
 
 
@@ -172,4 +212,20 @@ def main():
 if __name__ == "__main__":
     main()
 
-# to run: python load_csv_to_postgres.py --csv /Users/you_path_name
+# Example .env configuration:
+#
+# PostgreSQL connection (required):
+# PGHOST="localhost"
+# PGPORT="5432"
+# PGUSER="your_username"
+# PGPASSWORD="your_password"
+# PGDATABASE="analytics"
+#
+# Extermination-specific settings:
+# COLS_KEEP_EXTERMINATION="Date,Category,Address,Location,Room,Pest,Report,Reporter,Action A,Action B,Addtl Info"
+# COL_TYPES_EXTERMINATION="TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT"
+# PGTARGET_SCHEMA_EXTERMINATION="raw"
+# PGTARGET_TABLE_EXTERMINATION="extermination"
+# PGUPSERT_KEY_EXTERMINATION=""
+#
+# To run: python extermination_load_csv_to_postgres.py --csv /path/to/your/extermination_data.csv

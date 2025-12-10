@@ -1,0 +1,7 @@
+sources:
+  - name: raw
+    database: analytics
+    schema: raw
+    tables:
+      - name: extermination
+        description: "Extermination and pest control records"

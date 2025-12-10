@@ -1,0 +1,74 @@
+version: 2
+
+models:
+  - name: extermination_mat
+    description: >
+      Materialized table of all extermination and pest control reports.
+      This model provides a performant layer for analytics and reporting on pest control activities.
+      Includes key attributes such as pest type, location, actions taken, and timestamps.
+
+    config:
+      materialized: table
+
+    columns:
+      - name: date_at
+        description: Date and time when the pest issue was reported.
+        data_tests:
+          - not_null
+        meta:
+          dimension:
+            type: date
+            label: "Reported At"
+            time_intervals: ['DAY', 'WEEK', 'MONTH', 'QUARTER', 'YEAR']
+            group_label: "Date"
+          metrics:
+            total_reports:
+              type: count
+
+      - name: week_number
+        description: Week as number instead of date.
+        meta:
+          dimension:
+            type: number
+            sql: "EXTRACT(WEEK FROM ${TABLE}.date_at)"
+            label: "Week (Number)"
+            group_label: "Date"
+
+      - name: month_number
+        description: Month as number instead of date.
+        meta:
+          dimension:
+            type: number
+            sql: "EXTRACT(MONTH FROM ${TABLE}.date_at)"
+            label: "Month (Number)"
+            group_label: "Date"
+
+      - name: category
+        description: Category of the service or issue (e.g., routine inspection, emergency response).
+
+      - name: address
+        description: Building or property address where the pest issue occurred.
+
+      - name: location
+        description: Specific location within the building (e.g., basement, first floor).
+
+      - name: room
+        description: Room number or identifier where the pest was found.
+
+      - name: pest
+        description: Type of pest reported (e.g., rodents, insects, birds).
+
+      - name: report
+        description: Detailed description of the pest issue or sighting.
+
+      - name: reporter
+        description: Name or identifier of the person who reported the pest issue.
+
+      - name: action_a
+        description: Primary action taken to address the pest issue (e.g., trap placement, treatment application).
+
+      - name: action_b
+        description: Secondary or follow-up action taken to address the pest issue.
+
+      - name: addtl_info
+        description: Additional information, notes, or observations about the pest report and response.
